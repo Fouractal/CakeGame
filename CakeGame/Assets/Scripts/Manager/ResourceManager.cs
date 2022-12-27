@@ -10,7 +10,6 @@ public class ResourceManager
     {
         // Resources 경로에서 탐색
         T target = Resources.Load<T>($"{resourcePath}");
-
         return target;
     }
 }

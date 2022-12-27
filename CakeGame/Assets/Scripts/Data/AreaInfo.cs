@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AreaInfo
 {
-    public Define.CubeType cubeType = Define.CubeType.Choco;
+    public Define.CubeType cubeType;
     public Cube cube;
     public bool isDestroyed = false;
 }

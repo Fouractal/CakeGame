@@ -11,10 +11,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 
     public void Awake()
     {
-        string resourcePath = $"./Prefab/Choco";
-        GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-        Instantiate(curCubePrefab, this.transform);
-        //InitMap();
+        InitMap();
     }
 
     public void InitMap()
@@ -23,13 +20,16 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         {
             for (int j = 0; j < col; j++)
             {
-                Debug.Log($"{i} {j}");
-
                 AreaInfo newAreaInfo = new AreaInfo();
+                // CubeType에 랜덤 지정
+                newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0,
+                    System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
+                Debug.Log(newAreaInfo.cubeType);
                 mapInfo[i, j] = newAreaInfo;
-                string resourcePath = $"./Prefab/{newAreaInfo.cubeType.ToString()}";
+                string resourcePath = $"Prefab/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-                Instantiate(curCubePrefab, this.transform);
+                Instantiate(curCubePrefab,new Vector3(i * curCubePrefab.transform.localScale.x, 0,
+                    j * curCubePrefab.transform.localScale.x),Quaternion.identity);
             }
         }
     }
