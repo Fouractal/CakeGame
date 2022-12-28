@@ -65,6 +65,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c727362c4f489484babe70cdc0b82004, type: 3}
+--- !u!1 &5239878660994798591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c727362c4f489484babe70cdc0b82004, type: 3}
+  m_PrefabInstance: {fileID: 4933306572713733806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5763133888334503114 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: c727362c4f489484babe70cdc0b82004, type: 3}
@@ -96,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeState: 0
+  parent: {fileID: 5239878660994798591}
   colorChangeSpeed: 5
   startColor: {r: 1, g: 1, b: 1, a: 0}
   endColor: {r: 0.5566038, g: 0.09714311, b: 0.09714311, a: 0}

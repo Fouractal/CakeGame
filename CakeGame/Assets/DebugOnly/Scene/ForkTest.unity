@@ -811,6 +811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMap: {fileID: 2134646331}
+  Object: {fileID: 1763420472}
   newAreaInfo:
     rowIndex: 0
     columnIndex: 0
@@ -819,6 +820,7 @@ MonoBehaviour:
     isAimed: 0
     isPlayerJoin: 0
   availableAreaList: []
+  destrotyedAreaList: []
 --- !u!1 &1972030178
 GameObject:
   m_ObjectHideFlags: 0

@@ -373,5 +373,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpingForce: {x: 0, y: 0, z: 0}
-  playerSpeed: 1.5
+  playerSpeed: 4
   jumpHeight: 1
+  creamRemain: 1
+  creamCapacity: 5
+  isCreamAvailable: 0
+  fillCreamIndexI: 0
+  fillCreamIndexJ: 0

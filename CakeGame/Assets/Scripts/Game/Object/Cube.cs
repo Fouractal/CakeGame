@@ -7,7 +7,7 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     public Define.CubeState cubeState;
-
+    public GameObject parent;
     public float colorChangeSpeed = 0.5f;
     public Color startColor;
     public Color endColor;
@@ -51,7 +51,7 @@ public class Cube : MonoBehaviour
     [ContextMenu("DestoryCake")] 
     public void DestroyCake()
     {
-        // 다시 채워 넣을 것을 대비 비활성화, 
-        this.gameObject.SetActive(false);
+        // 다시 채워 넣을 것을 대비 비활성화, Cake 프리팹 아래에 Cube 스크립트가 있고 다른 장식들이 있어서 부모 불러서 비활성화
+        parent.SetActive(false);
     }
 }

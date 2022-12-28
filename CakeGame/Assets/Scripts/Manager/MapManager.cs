@@ -8,7 +8,8 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 {
     // Map에 대한 Data들을 관리하고 Return 합니다.
     public GameObject gameMap;
-    public GameObject player;
+    public GameObject Object;
+    private PlayerController playerController;
     
     public static int row = 10;
     public static int col = 10;
@@ -17,7 +18,10 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     [SerializeField]
     public AreaInfo newAreaInfo;
     [SerializeField]
-    public List<AreaInfo> availableAreaList = new List<AreaInfo>(); // 가능한 발판
+    public List<AreaInfo> availableAreaList = new List<AreaInfo>(); // 활성화된 발판
+    [SerializeField]
+    public List<AreaInfo> destrotyedAreaList = new List<AreaInfo>(); // 제거된 발판
+
     
     #region Return Map Data
     public List<AreaInfo> GetAvailableAreaList()
@@ -64,7 +68,6 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 availableAreaList.Add(newAreaInfo);
             }
         }
-        
         gameMap.transform.Rotate(0, -60, 0);
         Debug.Log("맵생성완료");
     }
@@ -109,17 +112,18 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         
         string resourcePath = $"Prefab/Enemy/Fork";
         GameObject playerPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-        Instantiate(playerPrefab, targetCube.transform.position + Vector3.up * 5, Quaternion.identity, GameObject.Find("Object").transform);
+        Instantiate(playerPrefab, targetCube.transform.position + Vector3.up * 3, Quaternion.identity, GameObject.Find("Object").transform);
+        
+        // 포크 작업은 포크 팩토리에서!
+        //포크 스폰 -> 일정 시간 뒤 찍음 -> 일정 시간 대기 -> 케이크 뽑아감 -> 빈 케이크 리스트에 추가
+        
     }
 
     #endregion
 
-    private void Update()
+    private void Start()
     {
-        // 캐릭터와 큐브 사이 길이 측정, 생크림 채우기 가능한 거리 계산
-        Vector3 cubePosition = mapInfo[0, 0].cube.transform.position;
-        Vector3 playerPositon = player.transform.position;
-        //if ((cubePosition, playerPositon))
-        
+        playerController = Object.GetComponentInChildren<PlayerController>();
     }
+    
 }
