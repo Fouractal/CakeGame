@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Profiling.LowLevel.Unsafe;
 using UnityEngine;
 
 public class aimedPointer : MonoBehaviour
@@ -9,6 +10,22 @@ public class aimedPointer : MonoBehaviour
     private RectTransform pointerRectTransform;
     public Transform playerTransform;
     public Transform targetTransform;
+
+    private int _reverse;
+    public int reverse
+    {
+        get
+        {
+            if (playerTransform.position.z > targetTransform.position.z)
+            {
+                _reverse = 1;
+            }
+            else
+                _reverse = -1;
+            return _reverse;
+        }
+
+    }
     private void Awake()
     {
         //targetPosition = new Vector3(200, 45);
@@ -24,7 +41,7 @@ public class aimedPointer : MonoBehaviour
         //playerTransform.gameObject.transform.position.normalized;
 
         float angle = Vector3.Angle(dir , Vector3.right);
-        pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
+        pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle * reverse);
         Debug.Log($"target : {toPosition}, player : {fromPosition}, angle : {angle}");
        //Debug.Log();
     }

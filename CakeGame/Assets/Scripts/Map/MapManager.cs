@@ -38,8 +38,10 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 
                 string resourcePath = $"Prefab/Cake/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
+
                 GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * Define.STANDARD_DISTANCE, 0, j * Define.STANDARD_DISTANCE),Quaternion.identity, gameMap.transform);
                 newAreaInfo.cube = curObject.GetComponent<Cube>();
+
             }
         }
         
@@ -61,6 +63,10 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             // mapInfo[i, j] 중 랜덤 선택
             int i = Random.Range(0, row);
             int j = Random.Range(0, col);
+            Debug.Log($"{i}, {j}");
+            Debug.Log(mapInfo[i, j].cubeType);
+            Debug.Log(mapInfo[i, j].cube);
+            Debug.Log(mapInfo[i, j].cube.cubeState);
             mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
             Debug.Log(mapInfo[i, j].cube.cubeState);
             
