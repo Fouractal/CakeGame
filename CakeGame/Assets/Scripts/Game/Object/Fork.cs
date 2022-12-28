@@ -20,13 +20,7 @@ public class Fork : MonoBehaviour
         //Random.Range(GameManager.instance.balancingSO.attackDelayMin,GameManager.instance.balancingSO.attackDelayMax)
     }
 
-    private void Start()
-    {
 
-    }
-
-    
-    
     [ContextMenu("PickUp")]
     public void PickUp()
     {

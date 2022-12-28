@@ -8,6 +8,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 {
     // Map에 대한 Data들을 관리하고 Return 합니다.
     public GameObject gameMap;
+    public GameObject player;
     
     public static int row = 10;
     public static int col = 10;
@@ -112,4 +113,13 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     }
 
     #endregion
+
+    private void Update()
+    {
+        // 캐릭터와 큐브 사이 길이 측정, 생크림 채우기 가능한 거리 계산
+        Vector3 cubePosition = mapInfo[0, 0].cube.transform.position;
+        Vector3 playerPositon = player.transform.position;
+        //if ((cubePosition, playerPositon))
+        
+    }
 }
