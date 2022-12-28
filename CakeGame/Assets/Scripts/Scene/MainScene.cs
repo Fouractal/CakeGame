@@ -7,5 +7,6 @@ public class MainScene : MonoBehaviour
     private void Awake()
     {
         MapManager.Instance.InitMap();
+        Player.InitPlayer();
     }
 }
