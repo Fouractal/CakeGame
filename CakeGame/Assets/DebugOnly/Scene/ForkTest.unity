@@ -810,7 +810,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7e1d996f34f0c4ab8486e7147074f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMap: {fileID: 0}
+  gameMap: {fileID: 2134646331}
+  newAreaInfo:
+    rowIndex: 0
+    columnIndex: 0
+    cubeType: 0
+    cube: {fileID: 0}
+    isAimed: 0
+    isPlayerJoin: 0
+  availableAreaList: []
 --- !u!1 &1972030178
 GameObject:
   m_ObjectHideFlags: 0
