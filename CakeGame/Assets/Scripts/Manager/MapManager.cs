@@ -44,6 +44,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             for (int j = 0; j < col; j++)
             {
                 newAreaInfo = new AreaInfo();
+                
                 // rowIndex, columnIndex 지정
                 newAreaInfo.rowIndex = i;
                 newAreaInfo.columnIndex = j;
@@ -100,11 +101,12 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     public void SpwanFork(int row, int col)
     {
         Debug.Log($"spawn fork {row}, {col}");
+        
         // 플레이 - ForkFactory.ForkSpawnRoutine - SpawnFork(targetArea)
         mapInfo[row,col].cube.StartBlink();
         Cube targetCube = mapInfo[row, col].cube;
         
-        string resourcePath = $"Prefab/Object/Fork";
+        string resourcePath = $"Prefab/Enemy/Fork";
         GameObject playerPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
         Instantiate(playerPrefab, targetCube.transform.position + Vector3.up * 5, Quaternion.identity, GameObject.Find("Object").transform);
     }
