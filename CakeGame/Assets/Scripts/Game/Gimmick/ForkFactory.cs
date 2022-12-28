@@ -32,7 +32,7 @@ public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
             // Spawn 포크
             MapManager.Instance.SpwanFork(targetArea.rowIndex,targetArea.columnIndex);
             // destroyList에 추가
-            MapManager.Instance.destrotyedAreaList.Add(targetArea);
+            MapManager.Instance.destroyedAreaList.Add(targetArea);
 
             // 케이크 비활성화
             MapManager.Instance.mapInfo[targetArea.rowIndex, targetArea.columnIndex].cube.DestroyCake();

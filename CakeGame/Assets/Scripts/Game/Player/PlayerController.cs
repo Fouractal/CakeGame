@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Profiling.LowLevel.Unsafe;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
+    public Slider creamSlider;
+    
     private CharacterController controller;
     private Vector3 playerVelocity;
     public Vector3 jumpingForce;
@@ -19,7 +22,13 @@ public class PlayerController : MonoBehaviour
 
     public int fillCreamIndexI;
     public int fillCreamIndexJ;
-    
+
+    private void OnEnable()
+    {
+        creamRemain = 0;
+        creamSlider.value = creamRemain;
+    }
+
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -63,16 +72,11 @@ public class PlayerController : MonoBehaviour
         // 케이크 채우기! I값이 -1이면 리턴, 멀어져서 fillCream불가능
 
         MapManager.Instance.mapInfo[fillCreamIndexI, fillCreamIndexJ].cube.parent.SetActive(true);
-
-        
+        creamRemain -= 1;
+        creamSlider.value = creamRemain;
     }
 
-
-    public void GetCream()
-    {
-        
-    }
-
+    
     public bool getAvalableCream()
     {
         // 캐릭터와 케이크 사이 길이 측정, 생크림 채우기 가능한 거리 계산,
@@ -93,4 +97,27 @@ public class PlayerController : MonoBehaviour
         fillCreamIndexI = -1;
         return false;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 10)
+        {
+            Destroy(other.gameObject);
+            Debug.Log("GetCream!");
+            GetCream();
+            Debug.Log(creamRemain);
+        }
+    }
+
+    public void GetCream()
+    {
+        // 생크림 아이템 접촉 시 creamRemain 증가, creamRemain은 용량을 넘길 수 없음.
+        if (creamRemain >= 0 && creamRemain <creamCapacity)
+        {
+            // 접촉한 오브젝트 Destroy
+            creamRemain += 1;
+            creamSlider.value = creamRemain;
+        }
+    }
+
 }
