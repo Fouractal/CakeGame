@@ -29,14 +29,14 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             for (int j = 0; j < col; j++)
             {
                 AreaInfo newAreaInfo = new AreaInfo();
-                // CubeType에 랜덤 지정
-                newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0,
-                    System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
                 mapInfo[i, j] = newAreaInfo;
+                
+                // CubeType에 랜덤 지정
+                newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0, System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
+                
                 string resourcePath = $"Prefab/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-                GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * curCubePrefab.transform.localScale.x, 0,
-                    j * curCubePrefab.transform.localScale.x),Quaternion.identity);
+                GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * Define.STANDARD_DISTANCE, 0, j * Define.STANDARD_DISTANCE),Quaternion.identity, transform);
                 newAreaInfo.cube = curObject.GetComponent<Cube>();
             }
         }
@@ -51,14 +51,16 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 Debug.Log("StopCoroutine");
                 StopCoroutine(RandomAiming());
             }
+            
             Debug.Log("InCoroutine");
+            
             // mapInfo[i, j] 중 랜덤 선택
             int i = Random.Range(0, row);
             int j = Random.Range(0, col);
             mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
             Debug.Log(mapInfo[i, j].cube.cubeState);
             //mapInfo[i, j].cube.isbeAimed = true;
-
+            
             yield return new WaitForSeconds(Random.Range(4f,7f));
             mapInfo[i, j].cube.cubeState = Define.CubeState.Idle;
             mapInfo[i, j].cube.ChangeOwnColor();

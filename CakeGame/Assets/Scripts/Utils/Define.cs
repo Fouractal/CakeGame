@@ -1,11 +1,12 @@
 public class Define
 {
-    public const int STANDARD_DISTANCE = 1;
+    public const int STANDARD_DISTANCE = 2;
     // 필요한 모든 enum은 Define에서 관리
     public enum CubeType
     {
         Choco,
-        Strawberry
+        Basic
+        //Strawberry
     }
     public enum playerState
     {
