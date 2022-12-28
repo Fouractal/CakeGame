@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,32 +6,29 @@ using Random = UnityEngine.Random;
 
 public class MapManager : SingletonMonoBehaviour<MapManager>
 {
+    // Map에 대한 Data들을 관리하고 Return 합니다.
+    
     public GameObject gameMap;
     
     public static int row = 10;
     public static int col = 10;
     public AreaInfo[,] mapInfo = new AreaInfo[10, 10];
 
-    public void Awake()
-    {
-        gameMap = GameObject.Find("GameMap");
-        InitMap();
-        StartCoroutine(RandomAiming());
-    }
-
-    private void Update()
-    {
-        
-    }
-
+    private List<AreaInfo> availableAreaList = new List<AreaInfo>();
+    
     public void InitMap()
     {
+        gameMap = GameObject.Find("GameMap");
+        
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
                 AreaInfo newAreaInfo = new AreaInfo();
+                newAreaInfo.rowIndex = i;
+                newAreaInfo.columnIndex = j;
                 mapInfo[i, j] = newAreaInfo;
+                availableAreaList.Add(newAreaInfo);
                 
                 // CubeType에 랜덤 지정
                 newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0, System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
@@ -80,5 +77,10 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         
         // 시간 지나면 cubeState를 Idle, destroyed로 바꿔야 함
 
+    }
+
+    public void SpwanFork(int row, int col)
+    {
+        
     }
 }
