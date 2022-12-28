@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Gimmick;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     private float time_start;
     private float time_current;
     public bool onPlay;
+
+    public BalancingSO balancingSO;
 
     private void Awake()
     {

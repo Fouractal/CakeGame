@@ -16,6 +16,23 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 
     private List<AreaInfo> availableAreaList = new List<AreaInfo>();
     
+    #region Return Map Data
+    public List<AreaInfo> GetAvailableAreaList()
+    {
+        return availableAreaList;
+    }
+
+    public AreaInfo GetRandomAvailableArea()
+    {
+        int randomIndex = Random.Range(0, availableAreaList.Count);
+
+        return availableAreaList[randomIndex];
+    }
+    
+    #endregion
+
+    #region Manage Map Data
+
     public void InitMap()
     {
         gameMap = GameObject.Find("GameMap");
@@ -54,9 +71,9 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 Debug.Log("StopCoroutine");
                 StopCoroutine(RandomAiming());
             }
-            
+
             Debug.Log("InCoroutine");
-            
+
             // mapInfo[i, j] 중 랜덤 선택
             int i = Random.Range(0, row);
             int j = Random.Range(0, col);
@@ -66,21 +83,22 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             Debug.Log(mapInfo[i, j].cube.cubeState);
             mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
             Debug.Log(mapInfo[i, j].cube.cubeState);
-            
+
             mapInfo[i, j].isAimed = true;
-            
-            yield return new WaitForSeconds(Random.Range(4f,7f));
+
+            yield return new WaitForSeconds(Random.Range(4f, 7f));
             mapInfo[i, j].cube.cubeState = Define.CubeState.Idle;
             mapInfo[i, j].cube.ChangeOwnColor();
         }
         //yield return new WaitForSeconds(Random.Range(2f, 4f));
-        
-        // 시간 지나면 cubeState를 Idle, destroyed로 바꿔야 함
 
+        // 시간 지나면 cubeState를 Idle, destroyed로 바꿔야 함
     }
 
     public void SpwanFork(int row, int col)
     {
-        
+        Debug.Log($"spawn fork {row}, {col}");
     }
+
+    #endregion
 }

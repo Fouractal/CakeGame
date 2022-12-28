@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff938d04fbc14e9fbed32da63ffc559a, type: 3}
   m_Name: BalancingSO
   m_EditorClassIdentifier: 
-  forkSpawnDelayMin: 0
-  forkSpawnDelayMax: 0
-  attackDelayMin: 0
-  attackDelayMax: 0
-  forkCountMax: 0
+  totalSpawnCount: 10
+  forkSpawnDelayMin: 10
+  forkSpawnDelayMax: 3
+  attackDelayMin: 10
+  attackDelayMax: 3
+  forkCountMax: 1
