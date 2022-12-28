@@ -34,7 +34,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 // CubeType에 랜덤 지정
                 newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0, System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
                 
-                string resourcePath = $"Prefab/{newAreaInfo.cubeType.ToString()}";
+                string resourcePath = $"Prefab/Cake/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
                 GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * Define.STANDARD_DISTANCE, 0, j * Define.STANDARD_DISTANCE),Quaternion.identity, transform);
                 newAreaInfo.cube = curObject.GetComponent<Cube>();
