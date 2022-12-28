@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BalancingSO
   m_EditorClassIdentifier: 
   totalSpawnCount: 10
-  forkSpawnDelayMin: 10
-  forkSpawnDelayMax: 3
-  attackDelayMin: 10
-  attackDelayMax: 3
+  forkSpawnDelayMin: 3
+  forkSpawnDelayMax: 10
+  attackDelayMin: 3
+  attackDelayMax: 10
   forkCountMax: 1
