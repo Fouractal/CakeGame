@@ -8,7 +8,7 @@ public class Cube : MonoBehaviour
 {
     public Define.CubeState cubeState;
 
-    public float colorChangeSpeed = 5f;
+    public float colorChangeSpeed = 0.5f;
     public Color startColor;
     public Color endColor;
     private float startTime;
