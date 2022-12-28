@@ -8,9 +8,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 {
     // Map에 대한 Data들을 관리하고 Return 합니다.
     public GameObject gameMap;
-    public GameObject Object;
-    private PlayerController playerController;
-    
+
     public static int row = 10;
     public static int col = 10;
     public AreaInfo[,] mapInfo = new AreaInfo[10, 10];
@@ -20,7 +18,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     [SerializeField]
     public List<AreaInfo> availableAreaList = new List<AreaInfo>(); // 활성화된 발판
     [SerializeField]
-    public List<AreaInfo> destrotyedAreaList = new List<AreaInfo>(); // 제거된 발판
+    public List<AreaInfo> destroyedAreaList = new List<AreaInfo>(); // 제거된 발판
 
     
     #region Return Map Data
@@ -87,7 +85,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             // mapInfo[i, j] 중 랜덤 선택
             int i = Random.Range(0, row);
             int j = Random.Range(0, col);
-            mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
+            //mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
             
             Debug.Log(mapInfo[i, j].cube.cubeState);
 
@@ -102,13 +100,13 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         // 시간 지나면 cubeState를 Idle, destroyed로 바꿔야 함
     }
 
-    public void SpwanFork(int row, int col)
+    public void SpwanFork(int i, int j)
     {
-        Debug.Log($"spawn fork {row}, {col}");
+        Debug.Log($"spawn fork {i}, {j}");
         
         // 플레이 - ForkFactory.ForkSpawnRoutine - SpawnFork(targetArea)
-        mapInfo[row,col].cube.StartBlink();
-        Cube targetCube = mapInfo[row, col].cube;
+        mapInfo[i,j].cube.StartBlink();
+        Cube targetCube = mapInfo[i, j].cube;
         
         string resourcePath = $"Prefab/Enemy/Fork";
         GameObject playerPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
@@ -121,9 +119,4 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 
     #endregion
 
-    private void Start()
-    {
-        playerController = Object.GetComponentInChildren<PlayerController>();
-    }
-    
 }

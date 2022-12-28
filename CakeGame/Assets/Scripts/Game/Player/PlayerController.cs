@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }*/
         // destroy 된 케이크 리스트 내에 존재하면
-        if (MapManager.Instance.destrotyedAreaList != null)
+        if (MapManager.Instance.destroyedAreaList != null)
             isCreamAvailable = getAvalableCream();
         // if (isCreamAvailable) 공격 가능 표시 UI? 추가  
         if (Input.GetButtonDown("Jump") && isCreamAvailable)
@@ -76,14 +76,14 @@ public class PlayerController : MonoBehaviour
     public bool getAvalableCream()
     {
         // 캐릭터와 케이크 사이 길이 측정, 생크림 채우기 가능한 거리 계산,
-        for (int i = 0; i < MapManager.Instance.destrotyedAreaList.Count; i++)
+        for (int i = 0; i < MapManager.Instance.destroyedAreaList.Count; i++)
         {
-            Vector3 cubePosition = MapManager.Instance.destrotyedAreaList[i].cube.transform.position;
+            Vector3 cubePosition = MapManager.Instance.destroyedAreaList[i].cube.transform.position;
             float dist = 3f;
             if ((cubePosition - this.transform.position).sqrMagnitude < dist * dist)
             {
-                fillCreamIndexI = MapManager.Instance.destrotyedAreaList[i].rowIndex;
-                fillCreamIndexJ = MapManager.Instance.destrotyedAreaList[i].columnIndex;
+                fillCreamIndexI = MapManager.Instance.destroyedAreaList[i].rowIndex;
+                fillCreamIndexJ = MapManager.Instance.destroyedAreaList[i].columnIndex;
 
                 //Debug.Log("row : " +MapManager.Instance.destrotyedAreaList[i].rowIndex +"col : " +
                   //  MapManager.Instance.destrotyedAreaList[i].columnIndex);
