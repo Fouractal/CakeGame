@@ -6,13 +6,15 @@ using Random = UnityEngine.Random;
 
 public class MapManager : SingletonMonoBehaviour<MapManager>
 {
+    public GameObject gameMap;
+    
     public static int row = 10;
     public static int col = 10;
-    
     public AreaInfo[,] mapInfo = new AreaInfo[10, 10];
 
     public void Awake()
     {
+        gameMap = GameObject.Find("GameMap");
         InitMap();
         StartCoroutine(RandomAiming());
     }
@@ -36,10 +38,12 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 
                 string resourcePath = $"Prefab/Cake/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-                GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * Define.STANDARD_DISTANCE, 0, j * Define.STANDARD_DISTANCE),Quaternion.identity, transform);
+                GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * Define.STANDARD_DISTANCE, 0, j * Define.STANDARD_DISTANCE),Quaternion.identity, gameMap.transform);
                 newAreaInfo.cube = curObject.GetComponent<Cube>();
             }
         }
+        
+        gameMap.transform.Rotate(0, -60, 0);
     }
 
     public IEnumerator RandomAiming()
@@ -59,7 +63,8 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             int j = Random.Range(0, col);
             mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
             Debug.Log(mapInfo[i, j].cube.cubeState);
-            //mapInfo[i, j].cube.isbeAimed = true;
+            
+            mapInfo[i, j].isAimed = true;
             
             yield return new WaitForSeconds(Random.Range(4f,7f));
             mapInfo[i, j].cube.cubeState = Define.CubeState.Idle;
