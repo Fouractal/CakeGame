@@ -16,7 +16,7 @@ public class aimedPointer : MonoBehaviour
     {
         get
         {
-            if (playerTransform.position.z > targetTransform.position.z)
+            if (playerTransform.position.z < targetTransform.position.z)
             {
                 _reverse = 1;
             }
@@ -34,8 +34,8 @@ public class aimedPointer : MonoBehaviour
 
     private void Update()
     {
-        Vector3 toPosition = Camera.main.transform.position - targetTransform.position;
-        Vector3 fromPosition = Camera.main.transform.position - playerTransform.position;
+        Vector3 toPosition = targetTransform.position - Camera.main.transform.position;
+        Vector3 fromPosition = playerTransform.position - Camera.main.transform.position;
         Vector3 dir = toPosition - fromPosition;
         Debug.Log($"Camera : {Camera.main.transform.position}, player : {playerTransform.position}, fromPosition :{fromPosition}");
         //playerTransform.gameObject.transform.position.normalized;
