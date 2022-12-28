@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main_Scene : MonoBehaviour
+public class MainScene : MonoBehaviour
 {
     private void Awake()
     {
