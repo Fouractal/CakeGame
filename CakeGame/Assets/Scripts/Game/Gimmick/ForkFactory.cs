@@ -28,6 +28,7 @@ public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
         for (int i = 0; i < GameManager.instance.balancingSO.totalSpawnCount; i++)
         {
             AreaInfo targetArea = MapManager.Instance.GetRandomAvailableArea();
+            Debug.Log(targetArea);
             MapManager.Instance.SpwanFork(targetArea.rowIndex,targetArea.columnIndex);
 
             float spawnDelay = Random.Range(GameManager.instance.balancingSO.forkSpawnDelayMin, GameManager.instance.balancingSO.forkSpawnDelayMax);

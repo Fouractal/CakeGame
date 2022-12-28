@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,6 @@ using Random = UnityEngine.Random;
 public class MapManager : SingletonMonoBehaviour<MapManager>
 {
     // Map에 대한 Data들을 관리하고 Return 합니다.
-    
     public GameObject gameMap;
     
     public static int row = 10;
@@ -15,7 +14,9 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     public AreaInfo[,] mapInfo = new AreaInfo[10, 10];
 
     [SerializeField]
-    private List<AreaInfo> availableAreaList = new List<AreaInfo>();
+    public AreaInfo newAreaInfo;
+    [SerializeField]
+    public List<AreaInfo> availableAreaList = new List<AreaInfo>(); // 가능한 발판
     
     #region Return Map Data
     public List<AreaInfo> GetAvailableAreaList()
@@ -42,25 +43,28 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         {
             for (int j = 0; j < col; j++)
             {
-                AreaInfo newAreaInfo = new AreaInfo();
+                newAreaInfo = new AreaInfo();
+                // rowIndex, columnIndex 지정
                 newAreaInfo.rowIndex = i;
                 newAreaInfo.columnIndex = j;
-                mapInfo[i, j] = newAreaInfo;
-                availableAreaList.Add(newAreaInfo);
                 
-                // CubeType에 랜덤 지정
+                // CubeType 랜덤 지정
                 newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0, System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
                 
                 string resourcePath = $"Prefab/Cake/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-
                 GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * Define.STANDARD_DISTANCE, 0, j * Define.STANDARD_DISTANCE),Quaternion.identity, gameMap.transform);
-                newAreaInfo.cube = curObject.GetComponent<Cube>();
+                newAreaInfo.cube = curObject.GetComponentInChildren<Cube>();
 
+                // 전체 맵에 대한 정보 입력
+                mapInfo[i, j] = newAreaInfo;
+                // 사용가능한 맵에 정보 입력
+                availableAreaList.Add(newAreaInfo);
             }
         }
         
         gameMap.transform.Rotate(0, -60, 0);
+        Debug.Log("맵생성완료");
     }
 
     public IEnumerator RandomAiming()
@@ -78,10 +82,6 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             // mapInfo[i, j] 중 랜덤 선택
             int i = Random.Range(0, row);
             int j = Random.Range(0, col);
-            Debug.Log($"{i}, {j}");
-            Debug.Log(mapInfo[i, j].cubeType);
-            Debug.Log(mapInfo[i, j].cube);
-            Debug.Log(mapInfo[i, j].cube.cubeState);
             mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
             
             Debug.Log(mapInfo[i, j].cube.cubeState);
@@ -100,9 +100,9 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     public void SpwanFork(int row, int col)
     {
         Debug.Log($"spawn fork {row}, {col}");
-
+        // 플레이 - ForkFactory.ForkSpawnRoutine - SpawnFork(targetArea)
+        mapInfo[row,col].cube.StartBlink();
         Cube targetCube = mapInfo[row, col].cube;
-        targetCube.StartBlink();
         
         string resourcePath = $"Prefab/Object/Fork";
         GameObject playerPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
