@@ -108,4 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a31077bf54d8be4dbfadfc2bfbd09ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeType: 0
+  cubeState: 0
+  colorChangeSpeed: 1
+  startColor: {r: 0.9528302, g: 0.9303578, b: 0.9303578, a: 0}
+  endColor: {r: 0.509434, g: 0.026432898, b: 0.026432898, a: 0}
+  InitMaterial: {fileID: 2100000, guid: 253180d7fe447344e87963145d569b9f, type: 2}

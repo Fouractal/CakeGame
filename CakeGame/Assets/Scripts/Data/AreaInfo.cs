@@ -6,5 +6,4 @@ public class AreaInfo
 {
     public Define.CubeType cubeType;
     public Cube cube;
-    public bool isDestroyed = false;
 }

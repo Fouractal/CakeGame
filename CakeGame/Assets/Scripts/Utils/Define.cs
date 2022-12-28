@@ -7,4 +7,15 @@ public class Define
         Choco,
         Strawberry
     }
+    public enum playerState
+    {
+        Idle,
+        
+    }
+    public enum CubeState
+    {
+        Idle,
+        beAimed,
+        destroyed
+    }
 }

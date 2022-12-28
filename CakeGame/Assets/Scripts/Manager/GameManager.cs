@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         // 플레이 중 캐릭터 사망, 일시정지, 점수 집계 UI, Main 씬 이동 버튼 활성화
+        Debug.Log("gameover");
         onPlay = false;
         Time.timeScale = 0;
         // Main 
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
         if (time_current > playTimeMax)
         {
             // 제한 시간 종료 = 게임 클리어, 점수 집계 UI, Main 씬 이동 버튼 활성화
+            Debug.Log("timeover");
             onPlay = false;
             Time.timeScale = 0;
             UIManager.instance.SetActiveGoMain();

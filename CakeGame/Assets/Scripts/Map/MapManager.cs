@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MapManager : SingletonMonoBehaviour<MapManager>
 {
@@ -12,6 +14,12 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     public void Awake()
     {
         InitMap();
+        StartCoroutine(RandomAiming());
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void InitMap()
@@ -24,15 +32,40 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
                 // CubeType에 랜덤 지정
                 newAreaInfo.cubeType = (Define.CubeType)(UnityEngine.Random.Range(0,
                     System.Enum.GetValues(enumType: typeof(Define.CubeType)).Length));
-                Debug.Log(newAreaInfo.cubeType);
                 mapInfo[i, j] = newAreaInfo;
                 string resourcePath = $"Prefab/{newAreaInfo.cubeType.ToString()}";
                 GameObject curCubePrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-                Instantiate(curCubePrefab,new Vector3(i * curCubePrefab.transform.localScale.x, 0,
+                GameObject curObject = Instantiate(curCubePrefab,new Vector3(i * curCubePrefab.transform.localScale.x, 0,
                     j * curCubePrefab.transform.localScale.x),Quaternion.identity);
+                newAreaInfo.cube = curObject.GetComponent<Cube>();
             }
         }
     }
-    
-    
+
+    public IEnumerator RandomAiming()
+    {
+        while (GameManager.instance.onPlay)
+        {
+            if (!GameManager.instance.onPlay)
+            {
+                Debug.Log("StopCoroutine");
+                StopCoroutine(RandomAiming());
+            }
+            Debug.Log("InCoroutine");
+            // mapInfo[i, j] 중 랜덤 선택
+            int i = Random.Range(0, row);
+            int j = Random.Range(0, col);
+            mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
+            Debug.Log(mapInfo[i, j].cube.cubeState);
+            //mapInfo[i, j].cube.isbeAimed = true;
+
+            yield return new WaitForSeconds(Random.Range(4f,7f));
+            mapInfo[i, j].cube.cubeState = Define.CubeState.Idle;
+            mapInfo[i, j].cube.ChangeOwnColor();
+        }
+        //yield return new WaitForSeconds(Random.Range(2f, 4f));
+        
+        // 시간 지나면 cubeState를 Idle, destroyed로 바꿔야 함
+
+    }
 }
