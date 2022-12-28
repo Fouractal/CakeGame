@@ -6,19 +6,12 @@ public class Fork : MonoBehaviour
 {
     public Vector2 target;
 
-    public void InitPos(int row, int col)
+    public IEnumerator FallDown()
     {
-        // transform.position =   
-    }
+        float fallDownDelay = Random.Range(GameManager.instance.balancingSO.attackDelayMin, GameManager.instance.balancingSO.attackDelayMax);
+        yield return new WaitForSeconds(fallDownDelay);
 
-    public void Warning()
-    {
-        
-    }
-    
-    public void FallDown()
-    {
-        
+        gameObject.AddComponent<Rigidbody>();
     }
     
 }

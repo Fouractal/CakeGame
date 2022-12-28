@@ -14,6 +14,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     public static int col = 10;
     public AreaInfo[,] mapInfo = new AreaInfo[10, 10];
 
+    [SerializeField]
     private List<AreaInfo> availableAreaList = new List<AreaInfo>();
     
     #region Return Map Data
@@ -82,13 +83,14 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
             Debug.Log(mapInfo[i, j].cube);
             Debug.Log(mapInfo[i, j].cube.cubeState);
             mapInfo[i, j].cube.cubeState = Define.CubeState.beAimed;
+            
             Debug.Log(mapInfo[i, j].cube.cubeState);
 
             mapInfo[i, j].isAimed = true;
 
             yield return new WaitForSeconds(Random.Range(4f, 7f));
             mapInfo[i, j].cube.cubeState = Define.CubeState.Idle;
-            mapInfo[i, j].cube.ChangeOwnColor();
+            //mapInfo[i, j].cube.ChangeOwnColor();
         }
         //yield return new WaitForSeconds(Random.Range(2f, 4f));
 
@@ -98,6 +100,13 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     public void SpwanFork(int row, int col)
     {
         Debug.Log($"spawn fork {row}, {col}");
+
+        Cube targetCube = mapInfo[row, col].cube;
+        targetCube.StartBlink();
+        
+        string resourcePath = $"Prefab/Object/Fork";
+        GameObject playerPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
+        Instantiate(playerPrefab, targetCube.transform.position + Vector3.up * 5, Quaternion.identity, GameObject.Find("Object").transform);
     }
 
     #endregion

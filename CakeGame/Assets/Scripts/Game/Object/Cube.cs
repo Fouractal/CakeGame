@@ -14,19 +14,27 @@ public class Cube : MonoBehaviour
     private float startTime;
     public Material InitMaterial;
     private Renderer initRender;
+
     private void Start()
     {
         startTime = Time.time;
     }
 
-    private void Update()
+    public void StartBlink()
     {
-        if (cubeState == Define.CubeState.beAimed)
+        IEnumerator Blink()
         {
+            // 깜빡임 구현
             float t = (Mathf.Sin(Time.time - startTime) * colorChangeSpeed);
             GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, t);
-        }
         
+            yield return new WaitForSeconds(t);
+        
+            // 깜빡임 종료 후 머테리얼 교체
+            ChangeOwnColor();    
+        }
+
+        StartCoroutine(Blink());
     }
 
     [ContextMenu("ChangeColor")]
