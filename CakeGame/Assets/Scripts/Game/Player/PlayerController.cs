@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Profiling.LowLevel.Unsafe;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 2.0f;
     public float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
+
+    public int creamRemain = 0; // 남은 생크림 수
+    public int creamCapacity = 5; // 생크림 용량
+    
     
     
     private void Start()
@@ -40,5 +45,16 @@ public class PlayerController : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
-    
+
+    public void fillEmptyCake()
+    {
+        if (creamRemain <= 0) return;
+        
+    }
+
+
+    public void GetCream()
+    {
+        
+    }
 }
