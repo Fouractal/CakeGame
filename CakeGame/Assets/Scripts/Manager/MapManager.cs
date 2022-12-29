@@ -105,7 +105,7 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         Debug.Log($"spawn fork {i}, {j}");
         
         // 플레이 - ForkFactory.ForkSpawnRoutine - SpawnFork(targetArea)
-        mapInfo[i,j].cube.StartBlink();
+        mapInfo[i,j].cube.BlinkAll();
         Cube targetCube = mapInfo[i, j].cube;
         
         string resourcePath = $"Prefab/Enemy/Fork";

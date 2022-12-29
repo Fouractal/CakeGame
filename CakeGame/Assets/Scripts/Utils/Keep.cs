@@ -22,5 +22,19 @@ namespace Utils
             // 깜빡임 종료 후 머테리얼 교체
             ChangeOwnColor();    
             */
+        
+        /*
+        [ContextMenu("ChangeOwnColor")]
+        public void ChangeOwnColor()
+        {
+            
+            var cubeRenderer = this.GetComponent<Renderer>();
+            Debug.Log(cubeRenderer);
+            cubeRenderer.material.SetColor("_Color",Color.red);
+            
+
+            GetComponent<Renderer>().material = InitMaterial;
+        }
+        */
     }
 }
