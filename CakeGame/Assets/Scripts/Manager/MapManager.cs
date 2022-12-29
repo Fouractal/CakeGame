@@ -117,6 +117,11 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         
     }
 
+    public void RemoveFromAvailableList(AreaInfo areaInfo)
+    {
+        availableAreaList.Remove(areaInfo);
+    }
+
     #endregion
 
 

@@ -25,8 +25,8 @@ public class Define
     public enum CubeState
     {
         Idle,
-        beAimed,
-        destroyed
+        Warning,
+        Destroyed
     }
 
 }

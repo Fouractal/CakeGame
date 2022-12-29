@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
 {
+    // 포크의 생성을 관리하는 로직
     private void Awake()
     {
         
@@ -31,12 +32,13 @@ public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
             Debug.Log(targetArea);
             // Spawn 포크
             MapManager.Instance.SpwanFork(targetArea.rowIndex,targetArea.columnIndex);
-            // destroyList에 추가
-            MapManager.Instance.destroyedAreaList.Add(targetArea);
-
-            // 케이크 비활성화
-            MapManager.Instance.mapInfo[targetArea.rowIndex, targetArea.columnIndex].cube.DestroyCake();
             
+            // destroyList에 추가 //TODO Fork에서 처리한 후 추가되어야함
+            MapManager.Instance.destroyedAreaList.Add(targetArea);
+            
+            // AavailableList에서 제거
+            
+
             float spawnDelay = Random.Range(GameManager.instance.balancingSO.forkSpawnDelayMin, GameManager.instance.balancingSO.forkSpawnDelayMax);
             yield return new WaitForSeconds(spawnDelay);   
         }

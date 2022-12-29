@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
@@ -24,14 +26,29 @@ public class Cube : MonoBehaviour
     {
         IEnumerator Blink()
         {
-            // 깜빡임 구현
-            float t = (Mathf.Sin(Time.time - startTime) * colorChangeSpeed);
-            GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, t);
-        
-            yield return new WaitForSeconds(t);
-        
-            // 깜빡임 종료 후 머테리얼 교체
-            ChangeOwnColor();    
+            cubeState = Define.CubeState.Warning;
+
+            yield return null;
+            
+            MeshRenderer curRenderer = GetComponent<MeshRenderer>();
+            Color curColor = curRenderer.material.color;
+            
+            // 무작위 n초동안 3번 깜빡인다.
+            // 3번의 깜빡임 이후 포크는 낙하한다. 
+
+            float totalBlinkTime = Random.Range(GameManager.instance.balancingSO.attackDelayMin, GameManager.instance.balancingSO.attackDelayMax); 
+            
+            Sequence sequence = DOTween.Sequence();
+            sequence
+                .Append(curRenderer.material.DOColor(Color.red, totalBlinkTime / 6).From(curRenderer).SetEase(Ease.InCirc))
+                .Append(curRenderer.material.DOColor(curColor, totalBlinkTime / 6).From(Color.red).SetEase(Ease.InCirc))
+                .Append(curRenderer.material.DOColor(Color.red, totalBlinkTime / 6).From(curRenderer).SetEase(Ease.InCirc))
+                .Append(curRenderer.material.DOColor(curColor, totalBlinkTime / 6).From(Color.red).SetEase(Ease.InCirc))
+                .Append(curRenderer.material.DOColor(Color.red, totalBlinkTime / 6).From(curRenderer).SetEase(Ease.InCirc))
+                .Append(curRenderer.material.DOColor(curColor, totalBlinkTime / 6).From(Color.red).SetEase(Ease.InCirc))
+                .AppendCallback( ()=> this.DestroyCake() );
+            // 케이크 비활성화
+            
         }
 
         StartCoroutine(Blink());
@@ -50,7 +67,7 @@ public class Cube : MonoBehaviour
     }
 
     [ContextMenu("BlinkAll")]
-    public void BLinkAll()
+    public void BlinkAll()
     {
         Blink[] blinkArray = parent.GetComponentsInChildren<Blink>();
         for (int i = 0; i < blinkArray.Length; i++)
@@ -58,7 +75,8 @@ public class Cube : MonoBehaviour
             blinkArray[i].Blinkcake();
         }
     }
-    [ContextMenu("DestoryCake")] 
+
+    [ContextMenu("DestroyCake")] 
     public void DestroyCake()
     {
         // 다시 채워 넣을 것을 대비 비활성화, Cake 프리팹 아래에 Cube 스크립트가 있고 다른 장식들이 있어서 부모 불러서 비활성화
