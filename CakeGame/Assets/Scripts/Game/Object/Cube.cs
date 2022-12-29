@@ -10,18 +10,6 @@ public class Cube : MonoBehaviour
 {
     public Define.CubeState cubeState;
     public GameObject parent;
-    public float colorChangeSpeed = 0.5f;
-    public Color startColor;
-    public Color endColor;
-    private float startTime;
-    public Material InitMaterial;
-    private Renderer initRender;
-
-    private void Start()
-    {
-        startTime = Time.time;
-    }
-    
 
     [ContextMenu("BlinkAll")]
     public void BlinkAll()
