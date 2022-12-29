@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             tryFillEmptyCake();
         
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
+        playerVelocity.y += gravityValue * 0.3f * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
         if (transform.position.y < -5)
