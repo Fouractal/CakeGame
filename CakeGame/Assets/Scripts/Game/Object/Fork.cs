@@ -11,6 +11,16 @@ public class Fork : MonoBehaviour
     [SerializeField] private Transform _Fork,_pickedCake;
     public Vector2 target;
 
+
+    private IEnumerator Start()
+    {
+        // 포크가 생성된 후 2초 기다렸다가 FallDown 실행
+        yield return new WaitForSeconds(2f);
+        FallDown();
+    }
+    
+    
+
     [ContextMenu("FallDown")]
     public void FallDown()
     {
