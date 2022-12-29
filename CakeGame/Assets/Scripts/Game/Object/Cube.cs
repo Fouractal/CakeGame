@@ -31,10 +31,13 @@ public class Cube : MonoBehaviour
         
         cubeState = Define.CubeState.Warning;
         
+        float totalDuration = Random.Range(GameManager.instance.balancingSO.attackDelayMin, GameManager.instance.balancingSO.attackDelayMax);
+        float blinkDuration = totalDuration / 6;
+        
         Blink[] blinkArray = parent.GetComponentsInChildren<Blink>();
         for (int i = 0; i < blinkArray.Length; i++)
         {
-            blinkArray[i].Blinkcake();
+            blinkArray[i].Blinkcake(blinkDuration);
         }
     }
 
