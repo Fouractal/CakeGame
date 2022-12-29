@@ -5,6 +5,9 @@ namespace Game.Gimmick
     [CreateAssetMenu(fileName = "BalancingSO", menuName = "ScripatableObject/Balnancing", order = 0)]
     public class BalancingSO : ScriptableObject
     {
+        [Header("Player")]
+        public float playerSpeed;
+        
         [Header("Fork")]
         public int totalSpawnCount;
         
@@ -22,5 +25,14 @@ namespace Game.Gimmick
         public float creamSpawnDelayMin;
         public float creamSpawnDelayMax;
         public int blockCreateCost;
+
+        [Header("Friend")]
+        public float fieldFriendCountMax;
+
+        public float friendSpawnDelayMax;
+        public float friendSpawnDelayMin;
+
+        public float friendSpeed;
+        public float friendActionRate;
     }
 }

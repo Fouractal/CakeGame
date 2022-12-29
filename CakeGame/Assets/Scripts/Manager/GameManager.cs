@@ -28,6 +28,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         StartCoroutine(ForkFactory.Instance.ForkSpawnRoutine());
         StartCoroutine(ItemSpawnManager.Instance.CreamSpawnRoutine());
+        StartCoroutine(FriendFactory.Instance.ForkSpawnRoutine());
         
         yield return new WaitUntil(() => TimeCheck() > balancingSO.playTime);
         //yield return new WaitForSecondsRealtime(balancingSO.playTime);

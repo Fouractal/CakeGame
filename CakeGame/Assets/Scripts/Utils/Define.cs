@@ -12,6 +12,28 @@ public class Define
         Blueberry_1
     }
 
+    public enum CubeState
+    {
+        Idle,
+        Warning,
+        Destroyed
+    }
+
+    public enum FriendType
+    {
+        None,
+        Cherryman,
+        Strawberryman
+    }
+
+    public enum FriendState
+    {
+        Idle,
+        Walk,
+        Dance,
+        Die
+    }
+    
     public enum ForkState
     {
 
@@ -20,13 +42,6 @@ public class Define
     public enum playerState
     {
         Idle
-    }
-    
-    public enum CubeState
-    {
-        Idle,
-        Warning,
-        Destroyed
     }
 
 }

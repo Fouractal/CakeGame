@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff938d04fbc14e9fbed32da63ffc559a, type: 3}
   m_Name: BalancingSO
   m_EditorClassIdentifier: 
+  playerSpeed: 0
   totalSpawnCount: 99
   forkSpawnDelayMin: 1
   forkSpawnDelayMax: 1
@@ -22,3 +23,8 @@ MonoBehaviour:
   creamSpawnDelayMin: 2
   creamSpawnDelayMax: 4
   blockCreateCost: 1
+  fieldFriendCountMax: 3
+  friendSpawnDelayMax: 3
+  friendSpawnDelayMin: 2
+  friendSpeed: 1
+  friendActionRate: 1

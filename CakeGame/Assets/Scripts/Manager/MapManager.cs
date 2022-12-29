@@ -127,6 +127,12 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         availableAreaList.Remove(areaInfo);
     }
 
+    public void MarkFriendInfo(int i, int j, Define.FriendType targetType)
+    {
+        AreaInfo targetArea = mapInfo[i, j];
+        targetArea.friendType = targetType;
+    }
+
     #endregion
 
 
