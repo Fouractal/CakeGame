@@ -112,16 +112,29 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
         GameObject forkPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
         Fork fork = Instantiate(forkPrefab, targetCube.transform.position + Vector3.up * 6,
             Quaternion.identity, GameObject.Find("Object").transform).GetComponentInChildren<Fork>();
-        fork._pickedCake = targetCube.transform; // 케이크 위치를 Fork로 넘겨줌
+        fork._pickedCake = targetCube.parent.transform; // 케이크 위치를 Fork로 넘겨줌
         fork.totalDuration = totalDuration;
+        fork.pickedCakeIndexI = i;
+        fork.pickedCakeIndexJ = j;
 
-        // 
 
         // 포크 작업은 포크 팩토리에서!
         //포크 스폰 -> 일정 시간 뒤 찍음 -> 일정 시간 대기 -> 케이크 뽑아감 -> 빈 케이크 리스트에 추가
 
     }
 
+    public void CakeFadeOut(int i, int j)
+    {
+        //Debug.Log($"CakeFadeOuti : {i}, j : {j}");
+        mapInfo[i, j].cube.FadeOutAll();
+    }
+
+    public void RefillCake(int i, int j)
+    {
+        mapInfo[i,j].cube.SetActiveTrue();
+        mapInfo[i, j].cube.cubeState = Define.CubeState.Idle;
+        mapInfo[i,j].cube.FadeInAll();
+    }
     public void RemoveFromAvailableList(AreaInfo areaInfo)
     {
         availableAreaList.Remove(areaInfo);

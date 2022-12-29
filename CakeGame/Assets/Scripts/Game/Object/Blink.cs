@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class Blink : MonoBehaviour
 {
-    private Material mat;
-
+    public Material mat;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,4 +19,14 @@ public class Blink : MonoBehaviour
         mat.DOColor(Color.red, blinkDuration).SetLoops(6, LoopType.Yoyo);
     }
 
+    public void FadeOut()
+    {
+        mat.DOFade(0, 3f);
+    }
+
+    public void FadeIn()
+    {
+        mat.DOFade(1, 1f);
+    }
+    
 }
