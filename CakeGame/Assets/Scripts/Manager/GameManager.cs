@@ -85,6 +85,5 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void LoadPlayScene()
     {
         SceneManager.LoadScene(1);
-        GameStart();
     }
 }

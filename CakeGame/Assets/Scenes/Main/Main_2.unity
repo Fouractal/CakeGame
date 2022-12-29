@@ -863,6 +863,7 @@ MonoBehaviour:
   newAreaInfo:
     rowIndex: 0
     columnIndex: 0
+    friendType: 0
     cubeType: 0
     cube: {fileID: 0}
     isAimed: 0
