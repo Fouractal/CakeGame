@@ -21,7 +21,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     void Start()
     {
         onPlay = false;
-        GameStart();
+        if (SceneManager.GetActiveScene().name == "Main_2")
+        {
+            GameStart();
+        }
     }
 
     private IEnumerator GameFramework() //게임 규칙 및 흐름

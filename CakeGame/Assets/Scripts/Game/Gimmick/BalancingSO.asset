@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BalancingSO
   m_EditorClassIdentifier: 
   playerSpeed: 0
-  totalSpawnCount: 99
-  forkSpawnDelayMin: 5
-  forkSpawnDelayMax: 6
+  totalSpawnCount: 100
+  forkSpawnDelayMin: 1
+  forkSpawnDelayMax: 2
   attackDelayMin: 2
   attackDelayMax: 5
   forkCountMax: 1
