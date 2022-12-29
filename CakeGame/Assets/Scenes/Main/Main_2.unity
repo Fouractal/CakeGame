@@ -289,7 +289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 401912322603c464fa1058edf54a81e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3087bc2d3005f5d40aa53e9ee75f28d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -571,10 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ff565de70ca564f8e2b52c2bb86d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableList: []
   creamPrefab: {fileID: 0}
-  timeBetSpawnMax: 4
-  timeBetSpawnMin: 2
 --- !u!1 &1526132176
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +869,7 @@ MonoBehaviour:
     isPlayerJoin: 0
   availableAreaList: []
   destroyedAreaList: []
+  totalDuration: 0
 --- !u!1 &1972030178
 GameObject:
   m_ObjectHideFlags: 0
