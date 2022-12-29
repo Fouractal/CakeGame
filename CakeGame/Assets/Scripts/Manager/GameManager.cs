@@ -5,74 +5,76 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    public static GameManager instance;
-    private float playTimeMax = 30f;
+    public BalancingSO balancingSO;
+    
     private float time_start;
     private float time_current;
+    private float time_end;
     public bool onPlay;
 
-    public BalancingSO balancingSO;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
+    private Coroutine gameFramework;
+    public delegate void GameEventHandler();
+    public event GameEventHandler OnGameOver;
+    
     void Start()
     {
         onPlay = false;
+        GameStart();
     }
 
-    
-    void Update()
+    private IEnumerator GameFramework() //게임 규칙 및 흐름
     {
-        if (!onPlay) return;
+        StartCoroutine(ForkFactory.Instance.ForkSpawnRoutine());
+
+        yield return new WaitUntil(() => TimeCheck() > balancingSO.playTime);
+        //yield return new WaitForSecondsRealtime(balancingSO.playTime);
         
-        // .... on Playing
-        check_Time();
+        GameOver();
     }
+    
     [ContextMenu("StartGame")]
     public void GameStart()
     {
-        // 게임 시작 : 제한 시간 측정,  
+        // 게임 시작 : 제한 시간 측정,
+        Debug.Log("GameStart");
+        
         Time.timeScale = 1;
-        onPlay = true;
         time_start = Time.time;
+        onPlay = true;
+        
+        if (gameFramework != null) StopCoroutine(gameFramework);
+        gameFramework = StartCoroutine(GameFramework());
     }
+    
     [ContextMenu("GameOver")]
     public void GameOver()
     {
         // 플레이 중 캐릭터 사망, 일시정지, 점수 집계 UI, Main 씬 이동 버튼 활성화
-        Debug.Log("gameover");
-        onPlay = false;
+        Debug.Log("GameOver");   
+        
         Time.timeScale = 0;
-        // Main 
+        time_end = Time.time;
+        onPlay = false;
+        
+        if (gameFramework != null) StopCoroutine(gameFramework);
+        gameFramework = null;
+
+        if (OnGameOver != null) OnGameOver();
+        
+        // Main
         UIManager.instance.SetActiveGoMain();
     }
-    private void check_Time()
+    
+    private float TimeCheck()
     {
         time_current = Time.time - time_start;
-        if (time_current > playTimeMax)
-        {
-            // 제한 시간 종료 = 게임 클리어, 점수 집계 UI, Main 씬 이동 버튼 활성화
-            Debug.Log("timeover");
-            onPlay = false;
-            Time.timeScale = 0;
-            UIManager.instance.SetActiveGoMain();
-        }
+        return time_current;
     }
 
+    
+    
     public void LoadMainScene()
     {
         SceneManager.LoadScene(0);

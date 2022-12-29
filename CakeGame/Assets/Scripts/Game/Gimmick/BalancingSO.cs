@@ -16,7 +16,7 @@ namespace Game.Gimmick
         public int forkCountMax;
 
         [Header("Time")]
-        public float Timer;
+        public float playTime;
         
         [Header("Cream")]
         public float creamSpawnDelayMin;

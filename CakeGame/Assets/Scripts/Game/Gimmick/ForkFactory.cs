@@ -4,16 +4,6 @@ using UnityEngine;
 public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
 {
     // 포크의 생성을 관리하는 로직
-    private void Awake()
-    {
-        
-    }
-
-    private IEnumerator Start()
-    {
-        yield return new WaitForSeconds(2f);
-        yield return ForkSpawnRoutine();
-    }
     public void StartForkSpawnRoutine()
     {
         StartCoroutine(ForkSpawnRoutine());
@@ -26,7 +16,7 @@ public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
     
     public IEnumerator ForkSpawnRoutine()
     {
-        for (int i = 0; i < GameManager.instance.balancingSO.totalSpawnCount; i++)
+        for (int i = 0; i < GameManager.Instance.balancingSO.totalSpawnCount; i++)
         {
             AreaInfo targetArea = MapManager.Instance.GetRandomAvailableArea();
             Debug.Log(targetArea);
@@ -39,7 +29,7 @@ public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
             // AavailableList에서 제거
             
 
-            float spawnDelay = Random.Range(GameManager.instance.balancingSO.forkSpawnDelayMin, GameManager.instance.balancingSO.forkSpawnDelayMax);
+            float spawnDelay = Random.Range(GameManager.Instance.balancingSO.forkSpawnDelayMin, GameManager.Instance.balancingSO.forkSpawnDelayMax);
             yield return new WaitForSeconds(spawnDelay);   
         }
         

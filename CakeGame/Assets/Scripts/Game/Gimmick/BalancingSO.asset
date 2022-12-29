@@ -18,7 +18,7 @@ MonoBehaviour:
   attackDelayMin: 2
   attackDelayMax: 5
   forkCountMax: 1
-  Timer: 0
+  playTime: 10
   creamSpawnDelayMin: 0
   creamSpawnDelayMax: 0
   blockCreateCost: 0

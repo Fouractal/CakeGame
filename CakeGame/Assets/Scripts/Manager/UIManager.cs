@@ -27,17 +27,17 @@ public class UIManager : MonoBehaviour
     {
         if (GoMainButton != null)
         {
-            GoMainButton.onClick.AddListener(GameManager.instance.LoadMainScene);   
+            GoMainButton.onClick.AddListener(GameManager.Instance.LoadMainScene);   
         }
 
         if (GoPlayButton != null)
         {
-            GoPlayButton.onClick.AddListener(GameManager.instance.LoadPlayScene);
+            GoPlayButton.onClick.AddListener(GameManager.Instance.LoadPlayScene);
         }
     }
 
     public void SetActiveGoMain()
     {
-        GoMainButton.gameObject.SetActive(true);
+        //GoMainButton.gameObject.SetActive(true);
     }
 }

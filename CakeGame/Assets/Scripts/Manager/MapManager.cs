@@ -72,9 +72,9 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 
     public IEnumerator RandomAiming()
     {
-        while (GameManager.instance.onPlay)
+        while (GameManager.Instance.onPlay)
         {
-            if (!GameManager.instance.onPlay)
+            if (!GameManager.Instance.onPlay)
             {
                 Debug.Log("StopCoroutine");
                 StopCoroutine(RandomAiming());
