@@ -20,6 +20,8 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
     [SerializeField]
     public List<AreaInfo> destroyedAreaList = new List<AreaInfo>(); // 제거된 발판
 
+    public float totalDuration;
+    
     
     #region Return Map Data
     public List<AreaInfo> GetAvailableAreaList()
@@ -102,19 +104,22 @@ public class MapManager : SingletonMonoBehaviour<MapManager>
 
     public void SpwanFork(int i, int j)
     {
-        Debug.Log($"spawn fork {i}, {j}");
-        
         // 플레이 - ForkFactory.ForkSpawnRoutine - SpawnFork(targetArea)
         mapInfo[i,j].cube.BlinkAll();
         Cube targetCube = mapInfo[i, j].cube;
         
         string resourcePath = $"Prefab/Enemy/Fork";
-        GameObject playerPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-        Instantiate(playerPrefab, targetCube.transform.position + Vector3.up * 3, Quaternion.identity, GameObject.Find("Object").transform);
-        
+        GameObject forkPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
+        Fork fork = Instantiate(forkPrefab, targetCube.transform.position + Vector3.up * 6,
+            Quaternion.identity, GameObject.Find("Object").transform).GetComponentInChildren<Fork>();
+        fork._pickedCake = targetCube.transform; // 케이크 위치를 Fork로 넘겨줌
+        fork.totalDuration = totalDuration;
+
+        // 
+
         // 포크 작업은 포크 팩토리에서!
         //포크 스폰 -> 일정 시간 뒤 찍음 -> 일정 시간 대기 -> 케이크 뽑아감 -> 빈 케이크 리스트에 추가
-        
+
     }
 
     public void RemoveFromAvailableList(AreaInfo areaInfo)

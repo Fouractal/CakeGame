@@ -19,7 +19,6 @@ public class ForkFactory : SingletonMonoBehaviour<ForkFactory>
         for (int i = 0; i < GameManager.Instance.balancingSO.totalSpawnCount; i++)
         {
             AreaInfo targetArea = MapManager.Instance.GetRandomAvailableArea();
-            Debug.Log(targetArea);
             // Spawn 포크
             MapManager.Instance.SpwanFork(targetArea.rowIndex,targetArea.columnIndex);
             

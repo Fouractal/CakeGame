@@ -103,9 +103,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.layer == 10)
         {
             Destroy(other.gameObject);
-            Debug.Log("GetCream!");
             GetCream();
             Debug.Log(creamRemain);
+        }
+
+        if (other.gameObject.layer == 11)
+        {
+            Debug.Log("포크에 맞음 사망..");
+            GameManager.Instance.GameOver();
         }
     }
 
