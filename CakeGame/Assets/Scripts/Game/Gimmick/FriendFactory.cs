@@ -18,6 +18,10 @@ public class FriendFactory : SingletonMonoBehaviour<FriendFactory>
     {
         while(true)
         {
+            yield return new WaitUntil(() => fieldFriendCount < GameManager.Instance.balancingSO.fieldFriendCountMax);
+            float spawnDelay = Random.Range(GameManager.Instance.balancingSO.friendSpawnDelayMin, GameManager.Instance.balancingSO.friendSpawnDelayMax);
+            yield return new WaitForSeconds(spawnDelay);
+            
             List<AreaInfo> curAreaInfoList = MapManager.Instance.GetAvailableAreaList();
             List<AreaInfo> spawnableAreaList = new List<AreaInfo>();
 
@@ -38,10 +42,9 @@ public class FriendFactory : SingletonMonoBehaviour<FriendFactory>
             GameObject curFriendPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
             GameObject curFriendInstance = Instantiate(curFriendPrefab, Vector3.zero,Quaternion.identity, targetArea.cube.transform.parent);
 
-            Debug.Log(targetArea.cube.transform.parent.position);    
+            fieldFriendCount++;
             
-            float spawnDelay = Random.Range(GameManager.Instance.balancingSO.friendSpawnDelayMin, GameManager.Instance.balancingSO.friendSpawnDelayMax);
-            yield return new WaitForSeconds(spawnDelay);   
+            Debug.Log(targetArea.cube.transform.parent.position);
         }
     }
 }

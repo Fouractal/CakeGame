@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -67,5 +68,10 @@ public class Friend : MonoBehaviour
     public IEnumerator Die()
     {
         yield return null;
+    }
+
+    private void OnDestroy()
+    {
+        FriendFactory.Instance.fieldFriendCount--;
     }
 }

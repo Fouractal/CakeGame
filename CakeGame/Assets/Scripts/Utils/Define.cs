@@ -41,7 +41,8 @@ public class Define
 
     public enum playerState
     {
-        Idle
+        Idle,
+        Die
     }
 
 }
