@@ -27,7 +27,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private IEnumerator GameFramework() //게임 규칙 및 흐름
     {
         StartCoroutine(ForkFactory.Instance.ForkSpawnRoutine());
-
+        StartCoroutine(ItemSpawnManager.Instance.CreamSpawnRoutine());
+        
         yield return new WaitUntil(() => TimeCheck() > balancingSO.playTime);
         //yield return new WaitForSecondsRealtime(balancingSO.playTime);
         

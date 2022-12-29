@@ -1,30 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ItemSpawnManager : MonoBehaviour
+public class ItemSpawnManager : SingletonMonoBehaviour<ItemSpawnManager>
 {
-    public List<AreaInfo> availableList;
     public GameObject creamPrefab;
-    public float timeBetSpawnMax = 4f;
-    public float timeBetSpawnMin = 2f;
-    private float timeBetSpawn;
-
-    private float lastSpawnTime;
     
-
-    private void Start()
+    private void Awake()
     {
         string resourcePath = $"Prefab/Cake/Cream";
         creamPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-        
-        lastSpawnTime = 0;
-        timeBetSpawn = UnityEngine.Random.Range(timeBetSpawnMin, timeBetSpawnMax);
-
     }
-
+/*
     private void Update()
     {
         if (Time.time >= lastSpawnTime + timeBetSpawn)
@@ -37,14 +27,33 @@ public class ItemSpawnManager : MonoBehaviour
             Spawn();
         }
     }
+*/
 
+    /*
     private void Spawn()
     {
-        availableList = MapManager.Instance.GetAvailableAreaList();
+        List<AreaInfo> availableList = MapManager.Instance.GetAvailableAreaList();
         Vector3 spawnPosition = availableList[Random.Range(0, availableList.Count)].cube.gameObject.transform.position;
         GameObject cream = Instantiate(creamPrefab, spawnPosition + Vector3.up * 1.5f, Quaternion.identity);
         
         Destroy(cream,10f);
+    }
+    */
+
+    public IEnumerator CreamSpawnRoutine()
+    {
+        while (true)
+        {
+            AreaInfo targetArea = MapManager.Instance.GetRandomAvailableArea();
+            Vector3 spawnPosition = targetArea.cube.gameObject.transform.position + Vector3.up * 1.5f;
+            GameObject creamInstance = Instantiate(creamPrefab, spawnPosition, Quaternion.identity);
+
+            creamInstance.transform.DORotate(Vector3.right, 1f, RotateMode.Fast).SetLoops(-1);
+            Destroy(creamInstance,10f);
+
+            float spawnDelay = Random.Range(GameManager.Instance.balancingSO.creamSpawnDelayMin, GameManager.Instance.balancingSO.creamSpawnDelayMax);
+            yield return new WaitForSeconds(spawnDelay);   
+        }
     }
 
 }
