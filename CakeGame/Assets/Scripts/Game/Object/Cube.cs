@@ -37,7 +37,7 @@ public class Cube : MonoBehaviour
         StartCoroutine(Blink());
     }
 
-    [ContextMenu("ChangeColor")]
+    [ContextMenu("ChangeOwnColor")]
     public void ChangeOwnColor()
     {
         /*
@@ -47,6 +47,16 @@ public class Cube : MonoBehaviour
         */
 
         GetComponent<Renderer>().material = InitMaterial;
+    }
+
+    [ContextMenu("BlinkAll")]
+    public void BLinkAll()
+    {
+        Blink[] blinkArray = parent.GetComponentsInChildren<Blink>();
+        for (int i = 0; i < blinkArray.Length; i++)
+        {
+            blinkArray[i].Blinkcake();
+        }
     }
     [ContextMenu("DestoryCake")] 
     public void DestroyCake()

@@ -106,3 +106,18 @@ MonoBehaviour:
   startColor: {r: 1, g: 1, b: 1, a: 0}
   endColor: {r: 0.5566038, g: 0.09714311, b: 0.09714311, a: 0}
   InitMaterial: {fileID: 2100000, guid: 5f9b56e12b82fa74c99f68e5ffd8bade, type: 2}
+--- !u!114 &4497959674142319970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5763133888334503114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebfc2acd499abd4cadb7d3e7f612aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownMat: {fileID: 2100000, guid: 5f9b56e12b82fa74c99f68e5ffd8bade, type: 2}
+  duration: 1
+  inBlinkTime: 0

@@ -10,7 +10,7 @@ namespace Game.Gimmick
         
         public float forkSpawnDelayMin;
         public float forkSpawnDelayMax;
-        public float attackDelayMin;
+        public float attackDelayMin; // attackDelay는 다음 공격까지의 시간? 케이크가 조준되고 깜빡이는 시간?
         public float attackDelayMax;
 
         public int forkCountMax;

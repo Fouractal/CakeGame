@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cd95b604117d5cc44a551d68a9c10ac3, type: 3}
       propertyPath: m_Name
-      value: Choco
+      value: Choco_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd95b604117d5cc44a551d68a9c10ac3, type: 3}
@@ -65,6 +65,11 @@ GameObject:
 --- !u!1 &4550101626412086097 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: cd95b604117d5cc44a551d68a9c10ac3, type: 3}
+  m_PrefabInstance: {fileID: 3794659674057998645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5512165531700773157 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -516098083770646512, guid: cd95b604117d5cc44a551d68a9c10ac3, type: 3}
   m_PrefabInstance: {fileID: 3794659674057998645}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &2369247050261547625
@@ -98,3 +103,33 @@ MonoBehaviour:
   startColor: {r: 1, g: 1, b: 1, a: 0}
   endColor: {r: 0.6415094, g: 0.16037735, b: 0.16037735, a: 0}
   InitMaterial: {fileID: 2100000, guid: 5cf0aeff1f0f02b4a85dd218932e04aa, type: 2}
+--- !u!114 &2194413624994778786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4550101626412086097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebfc2acd499abd4cadb7d3e7f612aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownMat: {fileID: 2100000, guid: 5cf0aeff1f0f02b4a85dd218932e04aa, type: 2}
+  duration: 1
+  inBlinkTime: 0
+--- !u!114 &2107734523112171194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5512165531700773157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebfc2acd499abd4cadb7d3e7f612aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownMat: {fileID: 2100000, guid: c74acda2cf1e13e4aa94df8a19febb42, type: 2}
+  duration: 1
+  inBlinkTime: 0
