@@ -9,20 +9,36 @@ public class Fork : MonoBehaviour
 {
     // 서서히 다가오면서 푹 찌름, 다시 케이크 들고 위로 올라감
     [SerializeField] public Transform _Fork,_pickedCake;
+    public Material forkMaterial;
     public Transform forkFront;
     public float totalDuration;
-    
+    public int pickedCakeIndexI;
+    public int pickedCakeIndexJ;
 
+    
     private IEnumerator Start()
     {
-        // 포크가 생성된 후 2초 기다렸다가 FallDown 실행
+        forkMaterial = GetComponent<MeshRenderer>().material;
+        // 포크가 생성된 후 totalDuration초 기다렸다가 FallDown 실행
         yield return new WaitForSeconds(totalDuration);
-        FallDown(_pickedCake.position); // 찍을 cakePosition? 
+        FallDown(_pickedCake.position); 
+        
+        // 3초 뒤 포크뽑히면서 FadeOut
+        yield return new WaitForSeconds(2f);
+        yield return PickUp();
+        forkMaterial.DOFade(0, 3f);
+        // FaedOut된 후 3초뒤에 setParent 원상복구
+        yield return new WaitForSeconds(3f);
+        MapManager.Instance.mapInfo[pickedCakeIndexI, pickedCakeIndexJ].cube.cubeState = Define.CubeState.Destroyed;
+        this.transform.SetParent(GameObject.Find("Object").transform);
+        yield return new WaitForSeconds(1f);
+        this.gameObject.SetActive(false); // 포크 비활성화
+        
     }
 
     // 깜빡임 시간 끝나고 찌름 
     [ContextMenu("FallDown")]
-    public void FallDown(Vector3 cakePosition) // 매개변수로 찍을 CakePosition값 받음
+    public void FallDown(Vector3 cakePosition) 
     {
         // 포크 앞 부분, 케이크 까지의 거리 만큼 이동
         // 포크가 생성되는 위치에서 포크 앞부분이 모두 잠길 정도로 찌름 
@@ -31,25 +47,27 @@ public class Fork : MonoBehaviour
 
 
     [ContextMenu("PickUp")]
-    public void PickUp()
+    public IEnumerator PickUp()
     {
-        _Fork.DOPunchPosition(
+        // 케이크랑 같이 들어올리면서 케이크는 FadeOut
+        // 케이크 흔들리고 끌려 올려옴
+        /*_Fork.DOPunchPosition(
             Vector3.down * 3,
             2f,
             0,
-            0);
+            0);*/
+        this.transform.SetParent(_pickedCake);
         _pickedCake.DOShakePosition(
-            2f,
-            1f,
+            0.5f,
+            0.5f,
             10);
-    }
-    /*
-    public IEnumerator FallDown()
-    {
-        float fallDownDelay = Random.Range(GameManager.instance.balancingSO.attackDelayMin, GameManager.instance.balancingSO.attackDelayMax);
-        yield return new WaitForSeconds(fallDownDelay);
+
+        float pickingTime = Random.Range(2, 3);
+        _pickedCake.DOMoveY(3f, pickingTime ).SetEase(Ease.InOutBounce);
         
-        gameObject.AddComponent<Rigidbody>();
+        // Fade Out
+        //Debug.Log($"{_pickedCake.name} ({pickedCakeIndexI}, {pickedCakeIndexJ})가 FadeOut");
+        MapManager.Instance.CakeFadeOut(pickedCakeIndexI, pickedCakeIndexJ);
+        yield return null;
     }
-    */
 }

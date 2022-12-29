@@ -62,18 +62,27 @@ public class PlayerController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if (transform.position.y < -5)
+            GameManager.Instance.GameOver();
     }
 
     public void tryFillEmptyCake()
     {
         Debug.Log("tryFill");
+        Debug.Log(creamRemain);
         if (creamRemain <= 0) return;
         if (fillCreamIndexI == -1) return;
         // 케이크 채우기! I값이 -1이면 리턴, 멀어져서 fillCream불가능
-
-        MapManager.Instance.mapInfo[fillCreamIndexI, fillCreamIndexJ].cube.parent.SetActive(true);
-        creamRemain -= 1;
-        creamSlider.value = creamRemain;
+        // cakeState가 destroyed일 때 채워넣을 수 있음
+        if (MapManager.Instance.mapInfo[fillCreamIndexI, fillCreamIndexJ].cube.cubeState 
+            == Define.CubeState.Destroyed)
+        {
+            Debug.Log("tryFill Destroyed일때만");
+            MapManager.Instance.RefillCake(fillCreamIndexI, fillCreamIndexJ);
+            creamRemain -= 1;
+            creamSlider.value = creamRemain;
+        }
     }
 
     

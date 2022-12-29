@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 0
   totalSpawnCount: 99
-  forkSpawnDelayMin: 1
-  forkSpawnDelayMax: 1
+  forkSpawnDelayMin: 5
+  forkSpawnDelayMax: 6
   attackDelayMin: 2
   attackDelayMax: 5
   forkCountMax: 1
-  playTime: 60
+  playTime: 100
   creamSpawnDelayMin: 2
   creamSpawnDelayMax: 4
   blockCreateCost: 1
