@@ -36,8 +36,10 @@ public class FriendFactory : SingletonMonoBehaviour<FriendFactory>
 
             string resourcePath = $"Prefab/Friends/{randomFriendType.ToString()}";
             GameObject curFriendPrefab = ResourceManager.LoadAsset<GameObject>(resourcePath);
-            GameObject curFriendInstance = Instantiate(curFriendPrefab,Vector3.up * 1.5f,Quaternion.identity, targetArea.cube.transform);
+            GameObject curFriendInstance = Instantiate(curFriendPrefab, Vector3.zero,Quaternion.identity, targetArea.cube.transform.parent);
 
+            Debug.Log(targetArea.cube.transform.parent.position);    
+            
             float spawnDelay = Random.Range(GameManager.Instance.balancingSO.friendSpawnDelayMin, GameManager.Instance.balancingSO.friendSpawnDelayMax);
             yield return new WaitForSeconds(spawnDelay);   
         }
