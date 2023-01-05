@@ -12,7 +12,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private float _playerSpeed = 2.0f;
     private float _jumpHeight = 1.0f;
     private float _gravityValue = -9.81f;
-    [SerializeField] private float _strawberryDist= 3f;
+    [SerializeField] private float strawberryDist= 3f;
     public Transform StrawberryTransform;
     public Transform RightHand;
     public bool Ray;
@@ -63,7 +63,7 @@ public class Controller : MonoBehaviour
             _playerAnimator.SetBool("walk",false);
         }
 
-        if (Input.GetKey("space") && (transform.position - StrawberryTransform.position).sqrMagnitude < _strawberryDist
+        if (Input.GetKey("space") && (transform.position - StrawberryTransform.position).sqrMagnitude < strawberryDist
             && Ray) // 조건 추가 : 일정 거리안에 있어야하고 player가 딸기를 보고 있어야 한다. 
         {
             GetStrawberry();
@@ -79,11 +79,7 @@ public class Controller : MonoBehaviour
         StrawberryTransform.SetParent(RightHand);
         StrawberryTransform.transform.localPosition =
             Vector3.Lerp(StrawberryTransform.localPosition, Vector3.zero, 2.7f);
-        //StrawberryTransform.DOMove(RightHand.position, 4.7f); // 정확히 0으로 안감 애니메이션에 치명적
-        //yield return new WaitForSeconds(4.7f); // 줍는 애니메이션 길이 
-
     }
-
     public void DrawRayLine()
     {
         if (hit.collider != null)
@@ -95,5 +91,4 @@ public class Controller : MonoBehaviour
             Debug.DrawRay(transform.position +Vector3.up,transform.forward * 5, Color.red);
         }
     }
-    
 }

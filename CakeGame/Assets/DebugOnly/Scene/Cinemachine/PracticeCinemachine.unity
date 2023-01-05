@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b2e2d217b48aab642920d46d631f6d12, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 14d1faa67a562fe40a7c1d88bee9a4f5, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14d1faa67a562fe40a7c1d88bee9a4f5, type: 3}
 --- !u!1 &325019286
@@ -965,8 +969,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939060034}
-  m_LocalRotation: {x: 0.00000030842742, y: 0.99277174, z: -0.12001791, w: 0.0000025512693}
-  m_LocalPosition: {x: -3.34, y: 2.246, z: 0.9299998}
+  m_LocalRotation: {x: 0.00000031268465, y: 0.99277174, z: -0.12001791, w: 0.0000025864847}
+  m_LocalPosition: {x: -3.34, y: 4.82, z: 6.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1110,7 +1114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1217321541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1147,6 +1151,10 @@ MonoBehaviour:
     m_VirtualCamera: {fileID: 1520142241}
     m_ActivateAfter: 0
     m_MinDuration: 0
+  - m_FullHash: -1057510677
+    m_VirtualCamera: {fileID: 1520142241}
+    m_ActivateAfter: 0
+    m_MinDuration: 0
   - m_FullHash: -1570446806
     m_VirtualCamera: {fileID: 1642615819}
     m_ActivateAfter: 0
@@ -1168,6 +1176,8 @@ MonoBehaviour:
     m_ParentHash: 756556552
   - m_Hash: -1570446806
     m_ParentHash: 756556552
+  - m_Hash: -1057510677
+    m_ParentHash: 756556552
 --- !u!4 &1217321542
 Transform:
   m_ObjectHideFlags: 0
@@ -1185,11 +1195,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1483481972 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -5480977901411583989, guid: 14d1faa67a562fe40a7c1d88bee9a4f5, type: 3}
-  m_PrefabInstance: {fileID: 177645213}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1520142240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,7 +1254,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520142240}
-  m_LocalRotation: {x: 0.14960687, y: 0.0000032244745, z: -0.0000004878945, w: 0.98874557}
+  m_LocalRotation: {x: 0.14960687, y: 0.000003234201, z: -0.0000004893662, w: 0.98874557}
   m_LocalPosition: {x: -1.9835031, y: 1.1034753, z: -17.259718}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1327,11 +1332,6 @@ Transform:
 --- !u!1 &1660074667 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 057b573b62df4ee4c8eade1530d336c4, type: 3}
-  m_PrefabInstance: {fileID: 789255297}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1660074668 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 057b573b62df4ee4c8eade1530d336c4, type: 3}
   m_PrefabInstance: {fileID: 789255297}
   m_PrefabAsset: {fileID: 0}
 --- !u!136 &1660074669
@@ -1503,7 +1503,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693185945}
-  m_LocalRotation: {x: 0.00000030842742, y: 0.99277174, z: -0.12001791, w: 0.0000025512693}
+  m_LocalRotation: {x: 0.00000031268465, y: 0.99277174, z: -0.12001791, w: 0.0000025864847}
   m_LocalPosition: {x: -1.9835031, y: 0.10347533, z: -8.259718}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1548,18 +1548,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882110876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb3900ac4ff1ff42913096bd79cfea4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d272d714199e284da5dbe3f0dfe7ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundedPlayer: 0
-  _playerSpeed: 2
-  _strawberryDist: 3
-  StrawberryTransform: {fileID: 1660074668}
-  RightHand: {fileID: 1483481972}
-  Ray: 0
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!95 &1882110879 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 14d1faa67a562fe40a7c1d88bee9a4f5, type: 3}
