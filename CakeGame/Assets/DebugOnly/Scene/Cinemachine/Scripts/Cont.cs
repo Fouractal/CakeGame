@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,7 +48,17 @@ public class Cont : MonoBehaviour
     private Dictionary<int, float> _jumpGravities = new Dictionary<int, float>();
     private Coroutine _currentJumpResetRoutine = null;
     #endregion
-    
+
+    #region GetItem
+    private int _isGettingItemHash;
+    public bool _isGettingItemPressed;
+    public bool _isDetected = false;
+    private float _minDistance = 3;
+    private RaycastHit _hit;
+    [SerializeField] private LayerMask _layerMask;
+    private Transform _strawberryTransform;
+    public Transform RightHand;
+    #endregion
     private void Awake()
     {
         _playerInput = new PlayerInput();
@@ -58,7 +69,8 @@ public class Cont : MonoBehaviour
         _isWalkingHash = Animator.StringToHash("walk");
         _isJumpingHash = Animator.StringToHash("isJumping");
         _jumpCountHash = Animator.StringToHash("jumpCount");
-        
+        _isGettingItemHash = Animator.StringToHash("getStrawberry");
+
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
         _playerInput.CharacterControls.Move.performed += OnMovementInput;
@@ -66,6 +78,8 @@ public class Cont : MonoBehaviour
         _playerInput.CharacterControls.Run.canceled += OnRun;
         _playerInput.CharacterControls.Jump.started += OnJump;
         _playerInput.CharacterControls.Jump.canceled += OnJump;
+        _playerInput.CharacterControls.GetItem.started += OnGetItem;
+        _playerInput.CharacterControls.GetItem.canceled += OnGetItem;
         // "started" is specifically called when the input system first receives the input. But that's it
         // If we wanna track when the key is let go, we need to use the "Canceled" callback.
         // "Performed" will continue to update the changes in the player input
@@ -83,6 +97,10 @@ public class Cont : MonoBehaviour
         _isMovementPressed = (_currentMovementInput.x != 0 || _currentMovementInput.y != 0);
     }
 
+    void OnGetItem(InputAction.CallbackContext context)
+    {
+        _isGettingItemPressed = context.ReadValueAsButton();
+    }
     void OnRun(InputAction.CallbackContext context)
     {
         _isRunPressed = context.ReadValueAsButton();
@@ -117,6 +135,12 @@ public class Cont : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _isDetected = Physics.Raycast(transform.position + Vector3.up / 2, transform.forward, out _hit,_minDistance, _layerMask);
+        if (_isDetected && _isGettingItemPressed)
+        {
+            StartCoroutine(GetItem());
+        }
+        
         HandleRotation();
         HandleAnimation();
         if (_isRunPressed)
@@ -129,8 +153,18 @@ public class Cont : MonoBehaviour
         }
         HandleGravity();
         HandleJump();
+        
     }
-
+    IEnumerator GetItem()
+    {
+        Debug.Log("GetItem");
+        _animator.SetTrigger(_isGettingItemHash);
+        _strawberryTransform = _hit.transform;
+        _strawberryTransform.DOScale(Vector3.one * 0.1f, 1.333f);
+        yield return new WaitForSeconds(1.333f);
+        _strawberryTransform.SetParent(RightHand);
+        _strawberryTransform.transform.localPosition = Vector3.Lerp(_strawberryTransform.localPosition, Vector3.zero, 3.4f);
+    }
     private void HandleAnimation()
     {
         bool isWalking = _animator.GetBool(_isWalkingHash);
@@ -165,7 +199,6 @@ public class Cont : MonoBehaviour
 
         if (_isMovementPressed)
         {
-            Debug.Log("눌렸고 HandleRotation");
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame*Time.deltaTime);
         }
