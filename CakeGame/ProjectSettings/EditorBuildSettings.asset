@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main/Main_2.unity
     guid: 1b65dcc14a26b034e9d6561f2a9758ca
+  - enabled: 1
+    path: Assets/DebugOnly/Scene/Cinemachine/PracticeCinemachine.unity
+    guid: b32d75a280e0ac546b72177e663eb694
   m_configObjects: {}

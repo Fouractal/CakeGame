@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -53,11 +54,22 @@ public class Cont : MonoBehaviour
     private int _isGettingItemHash;
     public bool _isGettingItemPressed;
     public bool _isDetected = false;
+    public bool isObtaining;
     private float _minDistance = 3;
     private RaycastHit _hit;
-    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private LayerMask _layerMaskCream;
     private Transform _strawberryTransform;
     public Transform RightHand;
+    #endregion
+
+    #region TalkNPC
+    private int _isTalkNpcHash;
+    private int _isTalkingHash;
+    [SerializeField] private bool _isTalkPressed = false;
+    public bool isTalking=false;
+    [SerializeField] private LayerMask _npcLayerMask;
+    [SerializeField] private CinemachineVirtualCamera _npcCam;
+    [SerializeField] private DialogueManager _dialogueManager;
     #endregion
     private void Awake()
     {
@@ -70,6 +82,8 @@ public class Cont : MonoBehaviour
         _isJumpingHash = Animator.StringToHash("isJumping");
         _jumpCountHash = Animator.StringToHash("jumpCount");
         _isGettingItemHash = Animator.StringToHash("getStrawberry");
+        _isTalkingHash = Animator.StringToHash("talkNPC");
+        _isTalkNpcHash = Animator.StringToHash("talkNpc");
 
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
@@ -80,6 +94,8 @@ public class Cont : MonoBehaviour
         _playerInput.CharacterControls.Jump.canceled += OnJump;
         _playerInput.CharacterControls.GetItem.started += OnGetItem;
         _playerInput.CharacterControls.GetItem.canceled += OnGetItem;
+        _playerInput.CharacterControls.TalkNpc.started += OnTalkNpc;
+        _playerInput.CharacterControls.TalkNpc.canceled += OnTalkNpc;
         // "started" is specifically called when the input system first receives the input. But that's it
         // If we wanna track when the key is let go, we need to use the "Canceled" callback.
         // "Performed" will continue to update the changes in the player input
@@ -111,6 +127,11 @@ public class Cont : MonoBehaviour
         _isJumpPressed = context.ReadValueAsButton();
     }
 
+    void OnTalkNpc(InputAction.CallbackContext context)
+    {
+        _isTalkPressed = context.ReadValueAsButton();
+    }
+
     void SetUpJumpVariables()
     {
         float timeToApex = _maxJumpTime / 2;
@@ -135,12 +156,29 @@ public class Cont : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _isDetected = Physics.Raycast(transform.position + Vector3.up / 2, transform.forward, out _hit,_minDistance, _layerMask);
-        if (_isDetected && _isGettingItemPressed)
+        _isDetected = Physics.Raycast(transform.position + Vector3.up / 2, transform.forward, out _hit,_minDistance);
+        if (_hit.collider != null)
         {
-            StartCoroutine(GetItem());
+            if (_hit.collider.gameObject.layer == 10) // 10 : Cream, Layermask.Value했더니 제곱값이 나옴 4096 
+            {
+                if (_isDetected && _isGettingItemPressed )
+                {
+                    StartCoroutine(GetItem());
+                }
+            }
+            else if (_hit.collider.gameObject.layer == 12) // 12 : NPC
+            {
+                if (_isDetected && _isTalkPressed && !isTalking)
+                {
+                    TalkNpc();
+                }else if (isTalking && Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (!_dialogueManager.DisplayNextSentence())
+                        StartCoroutine(TalkFinish());
+                }    
+            }
         }
-        
+
         HandleRotation();
         HandleAnimation();
         if (_isRunPressed)
@@ -155,6 +193,16 @@ public class Cont : MonoBehaviour
         HandleJump();
         
     }
+    
+    public NPCInteractable GetInteractableObject()
+    {
+        if (_isDetected)
+        {
+            if(_hit.collider.TryGetComponent(out NPCInteractable npcInteractable))
+                return npcInteractable;
+        }
+        return null;
+    }
     IEnumerator GetItem()
     {
         Debug.Log("GetItem");
@@ -164,6 +212,29 @@ public class Cont : MonoBehaviour
         yield return new WaitForSeconds(1.333f);
         _strawberryTransform.SetParent(RightHand);
         _strawberryTransform.transform.localPosition = Vector3.Lerp(_strawberryTransform.localPosition, Vector3.zero, 3.4f);
+        yield return new WaitForSeconds(1f);
+        isObtaining = true;
+    }
+
+    void TalkNpc()
+    {
+        isTalking = true;
+        // virtual NpcCam의 target, LookAt할당, 대화 애니메이션,  // 대화창열고 대화끝나면 다시 원래 상태로 _isTalkingHsh false 
+        _npcCam.Follow = _hit.collider.transform;
+        _npcCam.LookAt = _hit.collider.transform;
+        _animator.SetTrigger(_isTalkNpcHash);
+        _animator.SetBool(_isTalkingHash,true);
+        _dialogueManager.ActiveSentence();
+        DialogueTrigger trigger = _hit.collider.gameObject.GetComponent<DialogueTrigger>();
+        trigger.TriggerDialogue();
+    }
+
+    IEnumerator TalkFinish()
+    {
+        _animator.SetBool(_isTalkingHash,false);
+        _dialogueManager.DeactiveSentence();
+        yield return new WaitForSeconds(3f);
+        isTalking = false;
     }
     private void HandleAnimation()
     {

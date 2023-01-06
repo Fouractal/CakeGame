@@ -62,6 +62,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TalkNpc"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8bf91e1-a3bc-4869-9847-12d53527e785"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""GetItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d59aa508-9148-434e-a48f-cfec096464fd"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TalkNpc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
         m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_CharacterControls_GetItem = m_CharacterControls.FindAction("GetItem", throwIfNotFound: true);
+        m_CharacterControls_TalkNpc = m_CharacterControls.FindAction("TalkNpc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +248,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Run;
     private readonly InputAction m_CharacterControls_Jump;
     private readonly InputAction m_CharacterControls_GetItem;
+    private readonly InputAction m_CharacterControls_TalkNpc;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -235,6 +257,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
         public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
         public InputAction @GetItem => m_Wrapper.m_CharacterControls_GetItem;
+        public InputAction @TalkNpc => m_Wrapper.m_CharacterControls_TalkNpc;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +279,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GetItem.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGetItem;
                 @GetItem.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGetItem;
                 @GetItem.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGetItem;
+                @TalkNpc.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnTalkNpc;
+                @TalkNpc.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnTalkNpc;
+                @TalkNpc.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnTalkNpc;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,6 +298,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GetItem.started += instance.OnGetItem;
                 @GetItem.performed += instance.OnGetItem;
                 @GetItem.canceled += instance.OnGetItem;
+                @TalkNpc.started += instance.OnTalkNpc;
+                @TalkNpc.performed += instance.OnTalkNpc;
+                @TalkNpc.canceled += instance.OnTalkNpc;
             }
         }
     }
@@ -282,5 +311,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnGetItem(InputAction.CallbackContext context);
+        void OnTalkNpc(InputAction.CallbackContext context);
     }
 }
