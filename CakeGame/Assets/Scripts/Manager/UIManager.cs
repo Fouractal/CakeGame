@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject replayButton;
+    
     private static UIManager _instance;
     public static UIManager instance
     {
@@ -36,8 +39,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetActiveGoMain()
+    public void SetActiveReplayButton()
     {
-        //GoMainButton.gameObject.SetActive(true);
+        replayButton.SetActive(true);
     }
+    
 }

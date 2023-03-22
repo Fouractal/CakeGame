@@ -69,7 +69,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         if (OnGameOver != null) OnGameOver();
         
         // Main
-        UIManager.instance.SetActiveGoMain();
+        UIManager.instance.SetActiveReplayButton();
     }
     
     private float TimeCheck()
